@@ -1,0 +1,23 @@
+{
+  "compilerOptions": {
+    "allowSyntheticDefaultImports": true,
+    "lib": ["dom", "esnext"],
+    "target": "es6",
+    "module": "commonjs",
+    "moduleResolution": "node",
+    "skipLibCheck": true,
+    "resolveJsonModule": true,
+    "esModuleInterop": true,
+    "strict": true,
+    "outDir": "./dst",
+    "baseUrl": "./",
+    "rootDir": "./src",
+    "paths": {
+      "src": ["./src"],
+      "*": [
+        "./dst/node_modules/@types/*",
+        "./dst/node_modules/*"
+      ]
+    }
+  }
+}

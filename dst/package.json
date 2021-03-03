@@ -1,0 +1,17 @@
+{
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "dependencies": {
+    "@aws-sdk/client-secrets-manager": "^3.7.0",
+    "@aws-sdk/client-ssm": "^3.7.0",
+    "axios": "^0.21.1",
+    "child_process": "^1.0.2",
+    "discord-webhook-node": "^1.1.8",
+    "got": "^11.8.2"
+  },
+  "devDependencies": {
+    "@types/aws-lambda": "^8.10.72",
+    "@types/node": "^14.14.31"
+  }
+}
