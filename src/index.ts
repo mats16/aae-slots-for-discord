@@ -3,13 +3,16 @@ import { SecretsManagerClient, GetSecretValueCommand } from "@aws-sdk/client-sec
 import got from 'got';
 const { Webhook, MessageBuilder } = require('discord-webhook-node');
 
-const LOFTAPP_URL: string = 'https://awsloft.tokyo';
-const ICON_URL: string = 'https://awsloft.tokyo/favicon.png'
-const SLOTS_API_URL:string = 'https://d34rct6gehngzd.cloudfront.net/api/v1/office-hour/slots'
 const DISCORD_WEBHOOK_URL: string = process.env.DISCORD_WEBHOOK_URL || 'https://discord.com/api/webhooks/0000/xxxx';
 const LOFTAPP_SECRET_ARN: string = process.env.LOFTAPP_SECRET_ARN || '';
 
+const ICON_URL: string = 'https://awsloft.tokyo/favicon.png'
+const FOOTER_MESSAGE: string = '※ 予約枠は投稿時点のものです。実際の予約枠は Loft App で確認をお願いします。'
+const NO_SLOT_MESSAGE: string = '空いている予約枠がありません'
 const WEEKDAY = [ "日", "月", "火", "水", "木", "金", "土" ]
+
+const LOFTAPP_URL: string = 'https://awsloft.tokyo';
+const SLOTS_API_URL:string = 'https://d34rct6gehngzd.cloudfront.net/api/v1/office-hour/slots'
 
 const getSecretValueCommand = new GetSecretValueCommand({SecretId: LOFTAPP_SECRET_ARN})
 const client = new SecretsManagerClient({})
@@ -29,7 +32,7 @@ async function getIdToken(url: string, username: string, password: string) {
 
   try {
     const page = await browser.newPage();
-    page.setViewport({width: 1366, height: 1024}); // iPad Pro
+    page.setViewport({width: 375, height: 812}); // iPhone
     // signin
     await page.goto(url, {waitUntil: "domcontentloaded"});
     await page.type('input[name="username"]', username, { delay: 100 });
@@ -91,10 +94,11 @@ function genMessage(slots: slot[]) {
     const k = Object.keys(slotsJson)[i];
     const v: string[] = slotsJson[k];
     const fieldValue: string = (v.length == 0)
-      ? '空いている予約枠がありません'
+      ? NO_SLOT_MESSAGE
       : slotsJson[k].join('\n')
     msg.addField(k, fieldValue)
   }
+  msg.setFooter(FOOTER_MESSAGE)
   return msg
 }
 
