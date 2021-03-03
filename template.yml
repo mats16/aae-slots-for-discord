@@ -1,25 +1,22 @@
 AWSTemplateFormatVersion: 2010-09-09
-Description: >-
-  aae-slots-for-discord
+Description: Online Ask An Expert free slots checker for Discord
 
-# Transform section specifies one or more macros that AWS CloudFormation uses to process your template
-# https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/transform-section-structure.html
 Transform:
 - AWS::Serverless-2016-10-31
 
 Parameters:
 
   DiscordWebhookUrl:
-    Description: hoge
+    Description: Discord webhuuk URL
     Type: String
 
   LoftAppUsername:
-    Description: hoge
+    Description: Loft App Username
     Type: String
     NoEcho: True
 
   LoftAppPassword:
-    Description: hoge
+    Description: Loft App Password
     Type: String
     NoEcho: True
 
@@ -62,7 +59,7 @@ Resources:
         ScheduledEvents:
           Type: Schedule
           Properties:
-            Schedule: cron(0 0/8 * * ? *)
+            Schedule: cron(0 0,8 * * ? *)
       MemorySize: 1024
       Timeout: 60
       Policies:
