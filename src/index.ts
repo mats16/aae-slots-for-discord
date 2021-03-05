@@ -7,6 +7,7 @@ const DISCORD_WEBHOOK_URL: string = process.env.DISCORD_WEBHOOK_URL || 'https://
 const LOFTAPP_SECRET_ARN: string = process.env.LOFTAPP_SECRET_ARN || '';
 
 const ICON_URL: string = 'https://awsloft.tokyo/favicon.png'
+const DESCRIPTION_MESSAGE: string = 'AWS Loft Tokyo では、オンラインで AWS に関する技術相談を無償にて承っております。AWS のテクノロジーに熟達した AWS のソリューションアーキテクトやサポートエンジニアへ技術的な相談が可能です！'
 const FOOTER_MESSAGE: string = '※ 予約枠は投稿時点のものです。実際の予約枠は Loft App で確認をお願いします。'
 const NO_SLOT_MESSAGE: string = '空いている予約枠がありません'
 const WEEKDAY = [ "日", "月", "火", "水", "木", "金", "土" ]
@@ -90,7 +91,9 @@ function genMessage(slots: slot[]) {
       slotsJson[date].push(event);
     }
   }
-  for (let i = 0; i <  Object.keys(slotsJson).length; i++) {
+  //for (let i = 0; i <  Object.keys(slotsJson).length; i++) {
+  for (let i = 0; i <  2; i++) {
+    // 一旦、当日と翌日だけ
     const k = Object.keys(slotsJson)[i];
     const v: string[] = slotsJson[k];
     const fieldValue: string = (v.length == 0)
@@ -98,8 +101,11 @@ function genMessage(slots: slot[]) {
       : slotsJson[k].join('\n')
     msg.addField(k, fieldValue)
   }
-  msg.setFooter(FOOTER_MESSAGE)
-  return msg
+  msg.setDescription(DESCRIPTION_MESSAGE);
+  msg.setThumbnail('https://awsloft.tokyo/static/media/Hajime.0876d4b8.png');
+  //msg.setImage('https://awsloft.tokyo/static/media/AAE.2c1f7050.jpg');
+  msg.setFooter(FOOTER_MESSAGE);
+  return msg;
 }
 
 interface slot {
