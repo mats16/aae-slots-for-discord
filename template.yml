@@ -59,7 +59,7 @@ Resources:
         ScheduledEvents:
           Type: Schedule
           Properties:
-            Schedule: cron(0 0,7 ? * MON-FRI *)
+            Schedule: cron(0 0 ? * MON-FRI *)
       MemorySize: 1024
       Timeout: 60
       Policies:

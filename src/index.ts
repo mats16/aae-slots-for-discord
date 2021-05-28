@@ -7,7 +7,7 @@ const DISCORD_WEBHOOK_URL: string = process.env.DISCORD_WEBHOOK_URL || 'https://
 const LOFTAPP_SECRET_ARN: string = process.env.LOFTAPP_SECRET_ARN || '';
 
 const ICON_URL: string = 'https://awsloft.tokyo/favicon.png'
-const DESCRIPTION_MESSAGE: string = 'AWS Loft Tokyo では、オンラインで AWS に関する技術相談を無償にて承っております。AWS のテクノロジーに熟達した AWS のソリューションアーキテクトやサポートエンジニアへ技術的な相談が可能です！'
+const DESCRIPTION_MESSAGE: string = 'AWS のテクノロジーに精通した ソリューションアーキテクト や サポートエンジニア へ技術的な相談が可能です！（無償）'
 const FOOTER_MESSAGE: string = '※ 予約枠は投稿時点のものです。実際の予約枠は Loft App で確認をお願いします。'
 const NO_SLOT_MESSAGE: string = '空いている予約枠がありません'
 const WEEKDAY = [ "日", "月", "火", "水", "木", "金", "土" ]
@@ -20,7 +20,7 @@ const client = new SecretsManagerClient({})
 
 const chromium = require('chrome-aws-lambda');
 const hook = new Webhook(DISCORD_WEBHOOK_URL)
-  .setUsername('Ask An Expert')
+  .setUsername('Ask an Expert')
   .setAvatar(ICON_URL);
 
 async function getIdToken(url: string, username: string, password: string) {
@@ -70,7 +70,7 @@ async function getSlots(idToken: string) {
 
 function genMessage(slots: slot[]) {
   const msg = new MessageBuilder()
-    .setTitle('Online Ask An Expert 予約可能枠')
+    .setTitle('Online Ask an Expert 本日の予約可能枠')
     .setURL(`${LOFTAPP_URL}/reserve`);
   const nowDate = new Date();
   const slotsJson: any = {}
@@ -92,8 +92,8 @@ function genMessage(slots: slot[]) {
     }
   }
   //for (let i = 0; i <  Object.keys(slotsJson).length; i++) {
-  for (let i = 0; i <  2; i++) {
-    // 一旦、当日と翌日だけ
+  for (let i = 0; i <  1; i++) {
+    // 一旦、当日だけ
     const k = Object.keys(slotsJson)[i];
     const v: string[] = slotsJson[k];
     const fieldValue: string = (v.length == 0)
